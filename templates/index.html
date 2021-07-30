@@ -1,26 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div class="container">
-    <ul>
-        {% for object in object_list %}
-            <!-- Display Objects -->
-            <li>{{ object.title }}</li>
-            <li>{{ object.author }}</li>
-            <li>{{ object.published }}</li>
-            <li>{{ object.isbn_number }}</li>
-            <li>{{ object.pages }}</li>
-            <li><img src="{{ object.cover }}" alt="{{ object.title }}" style="width: 130px;"/></li>
-            <li>{{ object.language }}</li>
-            <hr/>
-        {% empty %}
-            <li>No objects yet.</li>
-        {% endfor %}
-    </ul>
-</div>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    <div class="content">
+        {% include 'search_panel.html' %}
+        <div style="margin-bottom:128px">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Published</th>
+                    <th scope="col">ISBN number</th>
+                    <th scope="col">Pages</th>
+                    <th scope="col">Language</th>
+                    <th scope="col">Cover</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in queryset reversed %}
+                    <tr>
+                    <th scope="row">{{ object.id }}</th>
+                    <td>{{ object.title }}</td>
+                    <td>{{ object.author }}</td>
+                    <td>{{ object.published }}</td>
+                    <td>{{ object.isbn_number }}</td>
+                    <td>{{ object.pages }}</td>
+                    <td>{{ object.language }}</td>
+                    <td><img src="{{ object.cover }}" alt="{{ object.title }}" style="width: 55px;"/></td>
+                    <td><a href="{% url 'edit_book' object.id %}">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                    </td>
+                {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

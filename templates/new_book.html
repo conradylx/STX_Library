@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="content">
+        <div>
+            <h4>Add new book</h4>
+        </div>
+        <br/>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                {% for field in form %}
+                    <div class="col-sm-6">
+                        <b>{{ field.label_tag }}</b> - {{ field }}
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit" id="submit" class="btn btn-info mt-5 mr-5">Submit</button>
+            <button id="button-go-back" class="btn btn-info mt-5"><a href="/">Go back</a></button>
+        </form>
+    </div>
+{% endblock content %}
