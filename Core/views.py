@@ -1,12 +1,16 @@
+import django_filters
 import requests
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
+from django_filters import rest_framework, ChoiceFilter, ModelChoiceFilter
+from rest_framework import generics
 
 from Core.forms import GeneralBookForm
 from Core.models import Book, Language
+from Core.serializers import BookSerializer
 
 
-def filter_function(request):
+def get_form_data(request):
     queryset = Book.objects.all()
     languages = Language.objects.all()
     book_title = request.GET.get('book_title')
@@ -28,7 +32,12 @@ def filter_function(request):
     if language != '' and language != 'Select language' and language is not None:
         queryset = queryset.filter(language__name=language)
 
-    print(date_max)
+    return queryset, languages
+
+
+def display_data(request):
+    queryset, languages = get_form_data(request)
+
     context = {
         'queryset': queryset,
         'languages': languages,
@@ -71,6 +80,7 @@ def import_books_from_google_api(request):
             published = response["items"][index]["volumeInfo"]["publishedDate"] if 'publishedDate' in \
                                                                                    response["items"][index][
                                                                                        'volumeInfo'] else "Not given"
+
             isbn_number = response["items"][index]["volumeInfo"]["industryIdentifiers"][0][
                 "identifier"] if 'industryIdentifiers' in response["items"][index]['volumeInfo'] else "Not given"
             pages = response["items"][index]["volumeInfo"]["pageCount"] if 'pageCount' in response["items"][index][
@@ -90,3 +100,23 @@ def import_books_from_google_api(request):
         return redirect('/')
 
     return render(request, 'import_books.html')
+
+
+class ApiFilter(rest_framework.FilterSet):
+    l = tuple(Language.objects.values_list("id", "name"))
+    language = django_filters.ChoiceFilter(label='Language', choices=l)
+
+    class Meta:
+        model = Book
+        fields = {
+            'title': ['icontains'],
+            'author': ['icontains'],
+            'published': ['iexact', 'gte', 'lte'],
+        }
+
+
+class ApiViewSet(generics.ListAPIView):
+    model = Book
+    serializer_class = BookSerializer
+    queryset = Book.objects.all()
+    filterset_class = ApiFilter

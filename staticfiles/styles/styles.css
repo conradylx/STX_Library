@@ -11,10 +11,6 @@ form {
     margin-bottom: 50px;
 }
 
-*, *:before, *:after {
-    box-sizing: inherit
-}
-
 body, h1 {
     font-family: "Raleway", Arial, sans-serif;
 }
@@ -107,80 +103,7 @@ h1 {
     background-color: #ccc !important
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+input[type="date"]:not(.has-value):before{
+  color: lightgray;
+  content: attr(placeholder);
+}
