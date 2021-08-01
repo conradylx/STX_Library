@@ -7,6 +7,8 @@ Basic front-end styling.
 
 It was built mainly for learning purposes.
 
+Tested in ~80%.
+
 ## Getting Started
 
 `git clone git@github.com:conradylx/STX_Library.git
