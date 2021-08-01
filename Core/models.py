@@ -9,10 +9,10 @@ class Language(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=300)
     author = models.CharField(max_length=100)
     published = models.CharField(max_length=10)
-    isbn_number = models.CharField('ISBN', max_length=13)
+    isbn_number = models.CharField('ISBN', max_length=40)
     pages = models.IntegerField(default=0)
     cover = models.CharField(max_length=200)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)

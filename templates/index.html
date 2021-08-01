@@ -26,7 +26,7 @@
                     <td>{{ object.isbn_number }}</td>
                     <td>{{ object.pages }}</td>
                     <td>{{ object.language }}</td>
-                    <td><img src="{{ object.cover }}" alt="{{ object.title }}" style="width: 55px;"/></td>
+                    <td><img src="{{ object.cover }}" alt="Not included" style="width: 55px;"/></td>
                     <td><a href="{% url 'edit_book' object.id %}">
                         <button type="button" class="btn btn-primary">Edit</button>
                     </a>

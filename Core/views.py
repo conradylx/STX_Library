@@ -24,7 +24,7 @@ def get_form_data(request):
     if book_author != '' and book_author is not None:
         queryset = queryset.filter(author__icontains=book_author)
     if book_title != '' and book_title is not None and book_author != '' and book_author is not None:
-        queryset = queryset.filter(Q(title__icontains=book_title) | Q(author__name__icontains=book_author)).distinct()
+        queryset = queryset.filter(Q(title__icontains=book_title) | Q(author__icontains=book_author)).distinct()
     if date_min != '' and date_min is not None:
         queryset = queryset.filter(published__gte=date_min)
     if date_max != '' and date_max is not None:
