@@ -2,7 +2,7 @@ import django_filters
 import requests
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from django_filters import rest_framework, ChoiceFilter, ModelChoiceFilter
+from django_filters import rest_framework
 from rest_framework import generics
 
 from Core.forms import GeneralBookForm
@@ -67,7 +67,7 @@ def operations_on_book_function(request, id=0):
     return render(request, 'new_book.html', context)
 
 
-def import_books_from_google_api(request):
+def fetch_books(request):
     if 'search' in request.GET:
         search = request.GET['search']
         context = requests.get(f'https://www.googleapis.com/books/v1/volumes?q={search}')
